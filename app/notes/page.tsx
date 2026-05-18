@@ -124,7 +124,7 @@ const currentStreak = Number(localStorage.getItem("aivora_streak") || "7");
 
 localStorage.setItem("aivora_tasks", String(currentTasks + 1));
 localStorage.setItem("aivora_streak", String(currentStreak + 1));
-localStorage.setItem("aivora_goal", goal);
+localStorage.setItem("aivora_goal", "Notes Learning");
     } catch (error) {
       setNotes("Backend connection failed. Make sure FastAPI backend is running.");
     }
