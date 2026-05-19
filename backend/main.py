@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import requests
+load_dotenv()
 SUPABASE_URL = "https://vfyhomysiagpkyfziozb.supabase.co"
 
 SUPABASE_KEY = "sb_publishable_QObbA9HRLnr9LTAtdV0m3Q_XdUDDl-7"
