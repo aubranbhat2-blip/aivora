@@ -9,7 +9,7 @@ export default function HistoryBox({ feature }: { feature: string }) {
     const email = localStorage.getItem("aivora_user");
     if (!email) return;
 
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/get-history", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/get-history`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

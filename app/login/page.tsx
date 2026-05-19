@@ -23,7 +23,7 @@ export default function LoginPage() {
     setStatus("");
 
     try {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/chat`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

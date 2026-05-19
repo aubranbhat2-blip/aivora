@@ -73,7 +73,7 @@ export default function InterviewPage() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/interview", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/interview`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -97,7 +97,7 @@ if (userEmail) {
   localStorage.setItem("aivora_goal", currentGoal);
   localStorage.setItem("mission_interview", "true");
 
-  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/save-progress", {
+  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/save-progress`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -106,7 +106,7 @@ if (userEmail) {
       message: `${userEmail}|${currentGoal}|${currentTasks}|${currentStreak}`,
     }),
   });
-  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/save-history", {
+  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/save-history`, {
   method: "POST",
   headers: {
     "Content-Type": "application/json",

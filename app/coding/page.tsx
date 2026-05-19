@@ -66,72 +66,55 @@ export default function CodingMentorPage() {
   }
 
   async function analyzeCode() {
-    if (!code.trim()) return;
+  setLoading(true);
+  setFeedback("");
 
-    setLoading(true);
-    setFeedback("");
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/coding`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ message: code }),
+    });
 
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/coding`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: code,
-        }),
-      });
+    const data = await response.json();
+    setFeedback(data.reply || data.response || "No response received.");
 
-      const data = await response.json();
-      setFeedback(data.reply);
-      const userEmail = localStorage.getItem("aivora_user");
+    const userEmail = localStorage.getItem("aivora_user") || "demo@aivora.com";
+    const currentGoal = "Coding Mentor";
+    const currentTasks = Number(localStorage.getItem("aivora_tasks") || "12");
+    const currentStreak = Number(localStorage.getItem("aivora_streak") || "7");
 
-if (userEmail) {
-  const currentTasks =
-    Number(localStorage.getItem("aivora_tasks") || "12") + 1;
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/save-progress`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: `${userEmail}|${currentGoal}|${currentTasks}|${currentStreak}`,
+      }),
+    });
 
-  const currentStreak =
-    Number(localStorage.getItem("aivora_streak") || "7") + 1;
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/save-history`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message: `${userEmail}|||Coding|||${code}|||${data.reply || data.response}`,
+      }),
+    });
 
-  const currentGoal = "AIVORA Learning";
-
-  localStorage.setItem("aivora_tasks", String(currentTasks));
-  localStorage.setItem("aivora_streak", String(currentStreak));
-  localStorage.setItem("aivora_goal", currentGoal);
-
-   {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      message: `${userEmail}|${currentGoal}|${currentTasks}|${currentStreak}`,
-    }),
-  });
-  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/save-history`,{
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    message: `${userEmail}|||FEATURE_NAME|||USER_INPUT|||${data.reply}`,
-  }),
-});
-}
-      localStorage.setItem("mission_coding", "true");
-      const currentTasks = Number(localStorage.getItem("aivora_tasks") || "12");
-const currentStreak = Number(localStorage.getItem("aivora_streak") || "7");
-
-localStorage.setItem("aivora_tasks", String(currentTasks + 1));
-localStorage.setItem("aivora_streak", String(currentStreak + 1));
-    } catch (error) {
-      setFeedback("Backend connection failed. Make sure FastAPI backend is running.");
-    }
-
-    setLoading(false);
+    localStorage.setItem("mission_coding", "true");
+    localStorage.setItem("aivora_tasks", String(currentTasks + 1));
+    localStorage.setItem("aivora_streak", String(currentStreak + 1));
+  } catch (error) {
+    setFeedback("Backend connection failed. Make sure FastAPI backend is running.");
   }
 
-  return (
+  setLoading(false);
+}
     <main className="min-h-screen bg-[#020617] text-white relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,#2563eb70,transparent_30%),radial-gradient(circle_at_bottom_right,#9333ea70,transparent_30%)]" />
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:70px_70px]" />
@@ -229,8 +212,8 @@ localStorage.setItem("aivora_streak", String(currentStreak + 1));
             </div>
           </div>
         </div>
-      </section>
+            </section>
+
       <HistoryBox feature="Coding" />
     </main>
-  );
 }

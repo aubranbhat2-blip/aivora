@@ -27,7 +27,7 @@ export default function AdminPage() {
     return;
   }
 
-  fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin-stats")
+  fetch(`${process.env.NEXT_PUBLIC_API_URL}/admin-stats`)
     .then((res) => res.json())
     .then((data) => setStats(data));
 }, []);

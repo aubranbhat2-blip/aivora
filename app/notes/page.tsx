@@ -71,7 +71,7 @@ export default function NotesPage() {
     setNotes("");
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/notes", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/notes`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -99,7 +99,7 @@ if (userEmail) {
   localStorage.setItem("aivora_goal", currentGoal);
   localStorage.setItem("mission_notes", "true");
 
-  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/save-progress", {
+  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/save-progress`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -108,7 +108,7 @@ if (userEmail) {
       message: `${userEmail}|${currentGoal}|${currentTasks}|${currentStreak}`,
     }),
   });
-  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/save-history", {
+  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/save-history`, {
   method: "POST",
   headers: {
     "Content-Type": "application/json",

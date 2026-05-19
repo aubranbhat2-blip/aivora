@@ -11,7 +11,7 @@ import { ArrowLeft, Flame, Trophy, CheckCircle, Circle } from "lucide-react";
       const email = localStorage.getItem("aivora_user");
 
       if (email) {
-        fetch(`${process.env.NEXT_PUBLIC_API_URL}/daily-missions", {
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/daily-missions`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

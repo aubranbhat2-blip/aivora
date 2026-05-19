@@ -38,7 +38,7 @@ export default function ProfilePage() {
 
     setUser(email);
 
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/get-progress", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/get-progress`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
