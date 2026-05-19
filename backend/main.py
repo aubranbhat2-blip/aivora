@@ -34,14 +34,9 @@ def debug_key():
         "has_spaces": key != key.strip() if key else False
     }
 
-class ChatRequest(BaseModel):
-    message: str
-
 @app.get("/")
 def home():
-    return {
-        "message": "AUBRIX.AI Backend Running 🚀"
-    }
+    return {"message": "AUBRIX.AI Backend Running 🚀"}
 
 def ask_openrouter(system_prompt: str, user_message: str):
     headers = {
