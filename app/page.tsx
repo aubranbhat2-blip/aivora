@@ -21,6 +21,29 @@ export default function Home() {
 
         <p className="text-sm text-gray-400 mt-3">
           without logging in
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16 max-w-4xl mx-auto">
+
+  <div className="rounded-3xl bg-white/5 p-6">
+    <h2 className="text-2xl font-bold">🤖 AI Mentor</h2>
+    <p className="text-gray-400">Personal AI learning mentor.</p>
+  </div>
+
+  <div className="rounded-3xl bg-white/5 p-6">
+    <h2 className="text-2xl font-bold">💻 Coding Mentor</h2>
+    <p className="text-gray-400">Improve coding and development skills.</p>
+  </div>
+
+  <div className="rounded-3xl bg-white/5 p-6">
+    <h2 className="text-2xl font-bold">📄 Resume Builder</h2>
+    <p className="text-gray-400">Create modern AI resumes.</p>
+  </div>
+
+  <div className="rounded-3xl bg-white/5 p-6">
+    <h2 className="text-2xl font-bold">🗺️ Roadmap Generator</h2>
+    <p className="text-gray-400">Get personalized learning roadmaps.</p>
+  </div>
+
+</div>
         </p>
       </div>
     </main>
