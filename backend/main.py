@@ -23,6 +23,7 @@ app.add_middleware(
 )
 
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+
 @app.get("/debug-key")
 def debug_key():
     key = os.getenv("OPENROUTER_API_KEY")
