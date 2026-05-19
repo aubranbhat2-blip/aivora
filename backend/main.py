@@ -21,7 +21,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-OPENROUTER_API_KEY = "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"
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
 class ChatRequest(BaseModel):
     message: str
