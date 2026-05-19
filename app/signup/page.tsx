@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Brain, Sparkles, UserPlus } from "lucide-react";
-
+import { supabase } from "@/lib/supabaseClient";
 export default function SignupPage() {
   const router = useRouter();
 
@@ -23,30 +23,25 @@ export default function SignupPage() {
     setStatus("");
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: `${email}|${password}`,
-        }),
-      });
+      const { data, error } = await supabase.auth.signUp({
+  email,
+  password,
+});
 
-      const data = await response.json();
+if (error) {
+  setStatus(error.message);
+  setLoading(false);
+  return;
+}
 
-      if (data.reply && data.reply.includes("successful")) {
-        setStatus("Signup successful! Redirecting...");
+setStatus("Signup successful! Redirecting...");
 
-        setTimeout(() => {
-          router.push("/login");
-        }, 1500);
-      } else {
-        setStatus(data.reply || "Signup failed.");
-      }
-    } catch (error) {
-      setStatus("Backend connection failed.");
-    }
+setTimeout(() => {
+  router.push("/login");
+}, 1500);
+      } catch (error) {
+  setStatus("Signup failed.");
+}
 
     setLoading(false);
   }
