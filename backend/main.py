@@ -1,5 +1,4 @@
 import os
-from fastapi.middleware.cors import CORSMiddleware
 from supabase import create_client, Client
 from dotenv import load_dotenv
 from fastapi import FastAPI
@@ -13,13 +12,6 @@ SUPABASE_KEY = "sb_publishable_QObbA9HRLnr9LTAtdV0m3Q_XdUDDl-7"
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 app = FastAPI()
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
 
 app.add_middleware(
     CORSMiddleware,
@@ -762,3 +754,18 @@ def daily_missions(request: ChatRequest):
             "missions": [],
             "error": str(e)
         }
+    @app.get("/")
+def home():
+    return {"message": "AIVORA Backend Running"}
+
+@app.post("/signup")
+def signup():
+    return {"message": "Signup successful"}
+
+@app.post("/login")
+def login():
+    return {"message": "Login successful"}
+
+@app.post("/chat")
+def chat():
+    return {"response": "Hello from AIVORA AI 🚀"}
