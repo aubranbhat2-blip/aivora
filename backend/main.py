@@ -33,7 +33,6 @@ def debug_key():
         "starts_with": key[:9] if key else "missing",
         "has_spaces": key != key.strip() if key else False
     }
-
 @app.get("/")
 def home():
     return {"message": "AUBRIX.AI Backend Running 🚀"}
