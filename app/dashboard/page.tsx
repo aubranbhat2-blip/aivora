@@ -43,13 +43,10 @@ export default function DashboardPage() {
   useEffect(() => {
     const loggedUser = localStorage.getItem("aivora_user");
 
-    if (!loggedUser) {
-      router.push("/login");
-      return;
-    }
+    
     
 
-    setUser(loggedUser);
+    setUser(loggedUser || "AIVORA User");
   }, [router]);
 
   const nav = [
