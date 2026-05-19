@@ -4,6 +4,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#020617] text-white flex items-center justify-center px-6 relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,#2563eb80,transparent_30%),radial-gradient(circle_at_bottom_right,#a855f780,transparent_30%)]" />
+      
 
       <div className="relative z-10 text-center">
         <h1 className="text-6xl font-black mb-4">
