@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Brain, Sparkles } from "lucide-react";
+import { supabase } from "@/lib/supabaseClient";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -23,26 +24,21 @@ export default function LoginPage() {
     setStatus("");
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: `${email}|${password}`,
-        }),
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
       });
 
-      const data = await response.json();
-
-      if (data.reply && data.reply.includes("successful")) {
-        localStorage.setItem("aivora_user", email);
-        router.push("/dashboard");
-      } else {
-        setStatus(data.reply || "Login failed.");
+      if (error) {
+        setStatus(error.message);
+        setLoading(false);
+        return;
       }
+
+      localStorage.setItem("aivora_user", email);
+      router.push("/dashboard");
     } catch (error) {
-      setStatus("Backend connection failed.");
+      setStatus("Login failed.");
     }
 
     setLoading(false);
