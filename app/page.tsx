@@ -14,7 +14,7 @@ export default function Home() {
 
         <Link
           href="/dashboard"
-          className="inline-block rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 px-8 py-4 text-xl font-bold shadow-2xl hover:scale-105 transition"
+          className="inline-block rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 px-8 py-4 text-xl font-bold shadow-2xl shadow-cyan-500/40 hover:shadow-cyan-400/60 hover:scale-105 transition"
         >
           Explore AIVORA
         </Link>
