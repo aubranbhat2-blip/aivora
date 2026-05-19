@@ -47,6 +47,7 @@ export default function DashboardPage() {
       router.push("/login");
       return;
     }
+    
 
     setUser(loggedUser);
   }, [router]);
