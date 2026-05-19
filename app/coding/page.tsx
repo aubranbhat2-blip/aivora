@@ -3,6 +3,7 @@ import HistoryBox from "../components/HistoryBox";
 
 import { useState } from "react";
 import Link from "next/link";
+import useProtectedRoute from "@/lib/useProtectedRoute";
 import {
   ArrowLeft,
   Code2,
@@ -13,6 +14,7 @@ import {
 } from "lucide-react";
 
 export default function CodingMentorPage() {
+  useProtectedRoute();
   const [code, setCode] = useState("");
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);

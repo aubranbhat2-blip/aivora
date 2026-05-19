@@ -3,8 +3,10 @@ import HistoryBox from "../components/HistoryBox";
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Map, Sparkles } from "lucide-react";
+import useProtectedRoute from "@/lib/useProtectedRoute";
 
 export default function RoadmapPage() {
+  useProtectedRoute();
   const [goal, setGoal] = useState("");
   const [roadmap, setRoadmap] = useState("");
   const [loading, setLoading] = useState(false);

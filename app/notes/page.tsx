@@ -3,6 +3,7 @@ import HistoryBox from "../components/HistoryBox";
 
 import { useState } from "react";
 import Link from "next/link";
+import useProtectedRoute from "@/lib/useProtectedRoute";
 import {
   ArrowLeft,
   BookOpen,
@@ -12,6 +13,7 @@ import {
 } from "lucide-react";
 
 export default function NotesPage() {
+  useProtectedRoute();
   const [topic, setTopic] = useState("");
   const [notes, setNotes] = useState("");
   const [loading, setLoading] = useState(false);
