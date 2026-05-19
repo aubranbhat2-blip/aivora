@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { supabase } from "@/lib/supabaseClient";
 import {
   Flame,
   Brain,
@@ -36,6 +37,8 @@ import {
 export default function DashboardPage() {
   const router = useRouter();
   const [user, setUser] = useState("AIVORA User");
+  
+
 
   useEffect(() => {
     const loggedUser = localStorage.getItem("aivora_user");
