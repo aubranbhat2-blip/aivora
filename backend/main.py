@@ -27,6 +27,8 @@ OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 @app.get("/")
 def home():
     return {"message": "AUBRIX.AI Backend Running 🚀"}
+class ChatRequest(BaseModel):
+    message: str
 
 def ask_openrouter(system_prompt: str, user_message: str):
     headers = {
@@ -750,8 +752,8 @@ def daily_missions(request: ChatRequest):
             "missions": [],
             "error": str(e)
         }
-    @app.get("/")
-def home():
+@app.get("/")
+def home():   
     return {"message": "AIVORA Backend Running"}
 
 @app.post("/signup")
