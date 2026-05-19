@@ -35,7 +35,7 @@ export default function SignupPage() {
 
       const data = await response.json();
 
-      if (data.reply.includes("successful")) {
+      if (data.reply && data.reply.includes("successful")) {
         setStatus("Signup successful! Redirecting...");
 
         setTimeout(() => {

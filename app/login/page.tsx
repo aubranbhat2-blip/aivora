@@ -35,7 +35,7 @@ export default function LoginPage() {
 
       const data = await response.json();
 
-      if (data.reply === "Login successful") {
+      if (data.reply && data.reply.includes("successful")) {
         localStorage.setItem("aivora_user", email);
         router.push("/dashboard");
       } else {
