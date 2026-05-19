@@ -21,7 +21,7 @@ export default function NewsPage() {
     setNews("");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/news", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/news", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,7 +48,7 @@ if (userEmail) {
   localStorage.setItem("aivora_streak", String(currentStreak));
   localStorage.setItem("aivora_goal", currentGoal);
 
-  await fetch("http://127.0.0.1:8000/save-progress", {
+  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/save-progress", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

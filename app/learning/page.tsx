@@ -113,7 +113,7 @@ export default function LearningPage() {
     setLearningPlan("");
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/learning", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/learning", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -140,7 +140,7 @@ if (userEmail) {
   localStorage.setItem("aivora_streak", String(currentStreak));
   localStorage.setItem("aivora_goal", currentGoal);
 
-  await fetch("http://127.0.0.1:8000/save-progress", {
+  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/save-progress", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -149,7 +149,7 @@ if (userEmail) {
       message: `${userEmail}|${currentGoal}|${currentTasks}|${currentStreak}`,
     }),
   });
-  await fetch("http://127.0.0.1:8000/save-history", {
+  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/save-history", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",

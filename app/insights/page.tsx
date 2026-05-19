@@ -12,7 +12,7 @@ export default function InsightsPage() {
   const email = localStorage.getItem("aivora_user");
 
   if (email) {
-    fetch("http://127.0.0.1:8000/dashboard-insights", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/dashboard-insights", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,7 +36,7 @@ return () => clearInterval(interval);
     const email = localStorage.getItem("aivora_user");
 
     if (email) {
-      fetch("http://127.0.0.1:8000/dashboard-insights", {
+      fetch(`${process.env.NEXT_PUBLIC_API_URL}/dashboard-insights", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
