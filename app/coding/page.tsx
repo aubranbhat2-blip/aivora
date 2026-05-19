@@ -72,7 +72,7 @@ export default function CodingMentorPage() {
     setFeedback("");
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/coding", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/coding`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -99,7 +99,7 @@ if (userEmail) {
   localStorage.setItem("aivora_streak", String(currentStreak));
   localStorage.setItem("aivora_goal", currentGoal);
 
-  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/save-progress", {
+   {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -108,7 +108,7 @@ if (userEmail) {
       message: `${userEmail}|${currentGoal}|${currentTasks}|${currentStreak}`,
     }),
   });
-  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/save-history", {
+  await fetch(`${process.env.NEXT_PUBLIC_API_URL}/save-history`,{
   method: "POST",
   headers: {
     "Content-Type": "application/json",
