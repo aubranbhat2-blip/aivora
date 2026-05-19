@@ -23,6 +23,15 @@ app.add_middleware(
 )
 
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
+@app.get("/debug-key")
+def debug_key():
+    key = os.getenv("OPENROUTER_API_KEY")
+    return {
+        "exists": key is not None,
+        "length": len(key) if key else 0,
+        "starts_with": key[:9] if key else "missing",
+        "has_spaces": key != key.strip() if key else False
+    }
 
 class ChatRequest(BaseModel):
     message: str
