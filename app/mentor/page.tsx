@@ -4,10 +4,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Brain, Send, Sparkles, ArrowLeft, Mic, Volume2 } from "lucide-react";
-import useProtectedRoute from "@/lib/useProtectedRoute";
+
 
 export default function MentorPage() {
-  useProtectedRoute();
+  
   const [personality, setPersonality] = useState("");
   const [messages, setMessages] = useState([
     {

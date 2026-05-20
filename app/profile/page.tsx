@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import useProtectedRoute from "@/lib/useProtectedRoute";
+
 import {
   ArrowLeft,
   Brain,
@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 
 export default function ProfilePage() {
-  useProtectedRoute();
+  
   const [user, setUser] = useState("");
   const [progressData, setProgressData] = useState({
     goal: "AI Engineer",

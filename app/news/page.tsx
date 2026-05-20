@@ -2,7 +2,7 @@
 import HistoryBox from "../components/HistoryBox";
 import { useState } from "react";
 import Link from "next/link";
-import useProtectedRoute from "@/lib/useProtectedRoute";
+
 import {
   ArrowLeft,
   Newspaper,
@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 export default function NewsPage() {
-  useProtectedRoute();
+  
   const [topic, setTopic] = useState("Give me today's AI news for students");
   const [news, setNews] = useState("");
   const [loading, setLoading] = useState(false);

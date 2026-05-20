@@ -3,7 +3,7 @@ import HistoryBox from "../components/HistoryBox";
 
 import { useState } from "react";
 import Link from "next/link";
-import useProtectedRoute from "@/lib/useProtectedRoute";
+
 import {
   ArrowLeft,
   FileText,
@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 export default function ResumePage() {
-  useProtectedRoute();
+  
   const [input, setInput] = useState("");
   const [resume, setResume] = useState("");
   const [loading, setLoading] = useState(false);
