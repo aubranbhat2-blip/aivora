@@ -1,6 +1,6 @@
 "use client";
-import HistoryBox from "../components/HistoryBox";
 
+import HistoryBox from "../components/HistoryBox";
 import { useState } from "react";
 import Link from "next/link";
 
@@ -13,8 +13,9 @@ import {
   Volume2,
 } from "lucide-react";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:8000";
+
 export default function CodingMentorPage() {
-  
   const [code, setCode] = useState("");
   const [feedback, setFeedback] = useState("");
   const [loading, setLoading] = useState(false);
@@ -38,14 +39,13 @@ export default function CodingMentorPage() {
     setListening(true);
 
     recognition.onresult = (event: any) => {
-      const transcript = event.results[0][0].transcript;
-      setCode(transcript);
+      setCode(event.results[0][0].transcript);
       setListening(false);
     };
 
-    recognition.onerror = (event: any) => {
+    recognition.onerror = () => {
       setListening(false);
-      alert("Voice recognition failed: " + event.error);
+      alert("Voice recognition failed.");
     };
 
     recognition.onend = () => {
@@ -68,57 +68,73 @@ export default function CodingMentorPage() {
   }
 
   async function analyzeCode() {
-  setLoading(true);
-  setFeedback("");
+    setLoading(true);
+    setFeedback("");
 
-  try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/coding`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ message: code }),
-    });
+    try {
+      const response = await fetch(`${API_URL}/chat`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: `You are AIVORA Coding Mentor. Help with this coding question/code:\n\n${code}`,
+        }),
+      });
 
-    const data = await response.json();
-    setFeedback(data.reply || data.response || "No response received.");
+      const data = await response.json();
 
-    const userEmail = localStorage.getItem("aivora_user") || "demo@aivora.com";
-    const currentGoal = "Coding Mentor";
-    const currentTasks = Number(localStorage.getItem("aivora_tasks") || "12");
-    const currentStreak = Number(localStorage.getItem("aivora_streak") || "7");
+      setFeedback(data.reply || data.response || "No response received.");
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/save-progress`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: `${userEmail}|${currentGoal}|${currentTasks}|${currentStreak}`,
-      }),
-    });
+      const userEmail =
+        localStorage.getItem("aivora_user") || "demo@aivora.com";
 
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/save-history`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        message: `${userEmail}|||Coding|||${code}|||${data.reply || data.response}`,
-      }),
-    });
+      const currentTasks = Number(
+        localStorage.getItem("aivora_tasks") || "12"
+      );
 
-    localStorage.setItem("mission_coding", "true");
-    localStorage.setItem("aivora_tasks", String(currentTasks + 1));
-    localStorage.setItem("aivora_streak", String(currentStreak + 1));
-  } catch (error) {
-    setFeedback("Backend connection failed. Make sure FastAPI backend is running.");
+      const currentStreak = Number(
+        localStorage.getItem("aivora_streak") || "7"
+      );
+
+      localStorage.setItem("mission_coding", "true");
+      localStorage.setItem("aivora_tasks", String(currentTasks + 1));
+      localStorage.setItem("aivora_streak", String(currentStreak + 1));
+
+      fetch(`${API_URL}/save-progress`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: `${userEmail}|Coding Mentor|${currentTasks}|${currentStreak}`,
+        }),
+      }).catch(() => {});
+
+      fetch(`${API_URL}/save-history`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message: `${userEmail}|||Coding|||${code}|||${
+            data.reply || data.response || ""
+          }`,
+        }),
+      }).catch(() => {});
+    } catch (error) {
+      setFeedback(
+        "Backend connection failed. Make sure FastAPI backend is running on http://127.0.0.1:8000"
+      );
+    }
+
+    setLoading(false);
   }
 
-  setLoading(false);
-}
+  return (
     <main className="min-h-screen bg-[#020617] text-white relative overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,#2563eb70,transparent_30%),radial-gradient(circle_at_bottom_right,#9333ea70,transparent_30%)]" />
+
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:70px_70px]" />
 
       <section className="relative z-10 p-6 max-w-7xl mx-auto">
@@ -139,7 +155,8 @@ export default function CodingMentorPage() {
             <div>
               <h1 className="text-5xl font-black">AIVORA Coding Mentor</h1>
               <p className="text-gray-400 mt-2">
-                Paste code, ask coding questions, fix bugs, and learn with voice assistant.
+                Paste code, ask coding questions, fix bugs, and learn with
+                voice assistant.
               </p>
             </div>
           </div>
@@ -176,14 +193,18 @@ export default function CodingMentorPage() {
                 </button>
 
                 <button
-                  onClick={() => setCode("Explain Python loops with simple examples.")}
+                  onClick={() =>
+                    setCode("Explain Python loops with simple examples.")
+                  }
                   className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 hover:bg-white/10"
                 >
                   Python Help
                 </button>
 
                 <button
-                  onClick={() => setCode("Explain React useState with a simple example.")}
+                  onClick={() =>
+                    setCode("Explain React useState with a simple example.")
+                  }
                   className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 hover:bg-white/10"
                 >
                   React Help
@@ -209,13 +230,15 @@ export default function CodingMentorPage() {
               <pre className="whitespace-pre-wrap text-gray-300">
                 {loading
                   ? "AIVORA is analyzing your code..."
-                  : feedback || "Code explanation, bug fix, and suggestions will appear here..."}
+                  : feedback ||
+                    "Code explanation, bug fix, and suggestions will appear here..."}
               </pre>
             </div>
           </div>
         </div>
-            </section>
+      </section>
 
       <HistoryBox feature="Coding" />
     </main>
+  );
 }
