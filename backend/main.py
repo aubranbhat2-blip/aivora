@@ -37,7 +37,7 @@ def ask_openrouter(system_prompt: str, user_message: str):
     }
 
     data = {
-        "model": "openai/gpt-3.5-turbo",
+       "model": "openrouter/free",
         "messages": [
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_message},
